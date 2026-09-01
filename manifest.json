@@ -1,0 +1,16 @@
+{
+  "name": "Daya Fitness",
+  "short_name": "Daya Fitness",
+  "description": "Premium luxury lifestyle fitness studio and gym in Visakhapatnam.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#070707",
+  "theme_color": "#ff2222",
+  "icons": [
+    {
+      "src": "images/daya_fitness_logo.webp",
+      "sizes": "200x200",
+      "type": "image/webp"
+    }
+  ]
+}

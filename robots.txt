@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://6a5c678d65ca5bfb626b839e--lighthearted-scone-2feb83.netlify.app/sitemap.xml
