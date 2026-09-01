@@ -210,10 +210,10 @@ textarea:focus-visible,
   font-weight: 400;
 }
 
-/* Scroll reveals */
+/* Scroll reveals - Ensures all sections display fully across all browsers */
 .reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(40px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 

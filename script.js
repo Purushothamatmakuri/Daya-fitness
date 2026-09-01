@@ -521,7 +521,7 @@ const revealObserver = new IntersectionObserver((entries) => {
       entry.target.classList.add('reveal-active');
     }
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+}, { threshold: 0.1, rootMargin: '0px' });
 
 function initScrollReveal() {
   document.querySelectorAll('.reveal-on-scroll').forEach(el => {
