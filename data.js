@@ -322,6 +322,36 @@ const DYA_CONFIG = {
         specs: "Flooring: High-density TPE | Mats: Alignment TPE | Accessories: Bands, Rollers"
       }
     ],
+    studioGallery: [
+      {
+        id: "lg-card-1",
+        type: "image",
+        src: "images/ladies_gallery1.jpeg",
+        title: "Luxury Studio Interior",
+        desc: "Exclusive, modern ladies-only training environment with premium lighting and design."
+      },
+      {
+        id: "lg-card-2",
+        type: "image",
+        src: "images/ladies_gallery2.jpeg",
+        title: "Bespoke Fitness Suite",
+        desc: "Fully equipped workout area tailored for strength, sculpt, and high-energy conditioning."
+      },
+      {
+        id: "lg-card-3",
+        type: "image",
+        src: "images/ladies_gallery3.jpeg",
+        title: "Private Sculpting Zone",
+        desc: "Dedicated personal training space offering absolute privacy and comfort."
+      },
+      {
+        id: "lg-card-4",
+        type: "video",
+        src: "images/ladies_galleryvid.mp4",
+        title: "Studio Tour Video",
+        desc: "Take a full video walkthrough of our Daya Ladies Studio facility."
+      }
+    ],
     programs: [
       {
         id: "class-card-1",
@@ -463,12 +493,9 @@ const DYA_CONFIG = {
       "images/ladies_yoga.webp"
     ],
     gallery: [
-      "images/ladies_sculpt.webp",
-      "images/ladies_yoga.webp",
-      "images/ladies_cardio.webp",
-      "images/ladies_privacy.webp",
-      "images/ladies_equip_cardio.webp",
-      "images/ladies_equip_smith.webp"
+      "images/ladies_gallery1.jpeg",
+      "images/ladies_gallery2.jpeg",
+      "images/ladies_gallery3.jpeg"
     ],
     locations: {
       activeId: "loc-ladies",

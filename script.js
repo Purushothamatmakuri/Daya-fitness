@@ -324,6 +324,36 @@ const DYA_CONFIG = {
         specs: "Flooring: High-density TPE | Mats: Alignment TPE | Accessories: Bands, Rollers"
       }
     ],
+    studioGallery: [
+      {
+        id: "lg-card-1",
+        type: "image",
+        src: "images/ladies_gallery1.jpeg",
+        title: "Luxury Studio Interior",
+        desc: "Exclusive, modern ladies-only training environment with premium lighting and design."
+      },
+      {
+        id: "lg-card-2",
+        type: "image",
+        src: "images/ladies_gallery2.jpeg",
+        title: "Bespoke Fitness Suite",
+        desc: "Fully equipped workout area tailored for strength, sculpt, and high-energy conditioning."
+      },
+      {
+        id: "lg-card-3",
+        type: "image",
+        src: "images/ladies_gallery3.jpeg",
+        title: "Private Sculpting Zone",
+        desc: "Dedicated personal training space offering absolute privacy and comfort."
+      },
+      {
+        id: "lg-card-4",
+        type: "video",
+        src: "images/ladies_galleryvid.mp4",
+        title: "Studio Tour Video",
+        desc: "Take a full video walkthrough of our Daya Ladies Studio facility."
+      }
+    ],
     programs: [
       {
         id: "class-card-1",
@@ -567,49 +597,127 @@ function renderThemeContent(theme) {
     }
   }
 
-  // 2. Why Choose (Bento)
-  const chooseTag = document.getElementById('why-choose-tag');
-  const chooseTitle = document.getElementById('why-choose-title');
-  const chooseSubtitle = document.getElementById('why-choose-subtitle');
-  if (chooseTag) chooseTag.innerText = data.whyChoose.tag;
-  if (chooseTitle) chooseTitle.innerText = data.whyChoose.title;
-  if (chooseSubtitle) chooseSubtitle.innerText = data.whyChoose.subtitle;
-
-  data.whyChoose.cards.forEach((card, idx) => {
-    const cardEl = document.getElementById(`bento-card-${idx + 1}`);
-    const imgEl = document.getElementById(`bento-img-${idx + 1}`);
-    const iconEl = document.getElementById(`bento-icon-${idx + 1}`);
-    const titleEl = document.getElementById(`bento-title-${idx + 1}`);
-    const descEl = document.getElementById(`bento-desc-${idx + 1}`);
-
-    if (imgEl) imgEl.src = card.img;
-    if (iconEl) iconEl.innerHTML = `<i class="${card.icon}"></i>`;
-    if (titleEl) titleEl.innerText = card.title;
-    if (descEl) descEl.innerText = card.desc;
-  });
-
-  // 3. Equipment Showcase
-  const eqContainer = document.getElementById('equipment-container');
-  if (eqContainer) {
-    eqContainer.innerHTML = data.equipment.map(eq => `
-      <div class="equipment-card" data-id="${eq.id}">
-        <div class="equipment-img-wrapper">
-          <img src="${eq.img}" alt="${eq.title}" class="equipment-img" loading="lazy">
-        </div>
-        <div class="equipment-content">
-          <h3 class="equipment-title">${eq.title}</h3>
-          <p class="equipment-desc">${eq.desc}</p>
-        </div>
-      </div>
-    `).join('');
-
-    // Re-bind equipment card clicks for Modal Spec triggers
-    eqContainer.querySelectorAll('.equipment-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const eqId = card.getAttribute('data-id');
-        openEquipmentModal(theme, eqId);
-      });
+  // 2. Why Choose (Bento) - Hidden in Ladies Studio mode, visible in Men's Gym mode
+  const whyChooseSection = document.getElementById('why-choose');
+  const whyChooseNavLinks = document.querySelectorAll('a[href="#why-choose"]');
+  if (theme === 'ladies') {
+    if (whyChooseSection) whyChooseSection.style.display = 'none';
+    whyChooseNavLinks.forEach(link => {
+      if (link.parentElement) link.parentElement.style.display = 'none';
     });
+  } else {
+    if (whyChooseSection) whyChooseSection.style.display = '';
+    whyChooseNavLinks.forEach(link => {
+      if (link.parentElement) link.parentElement.style.display = '';
+    });
+
+    const chooseTag = document.getElementById('why-choose-tag');
+    const chooseTitle = document.getElementById('why-choose-title');
+    const chooseSubtitle = document.getElementById('why-choose-subtitle');
+    if (chooseTag) chooseTag.innerText = data.whyChoose.tag;
+    if (chooseTitle) chooseTitle.innerText = data.whyChoose.title;
+    if (chooseSubtitle) chooseSubtitle.innerText = data.whyChoose.subtitle;
+
+    data.whyChoose.cards.forEach((card, idx) => {
+      const cardEl = document.getElementById(`bento-card-${idx + 1}`);
+      const imgEl = document.getElementById(`bento-img-${idx + 1}`);
+      const iconEl = document.getElementById(`bento-icon-${idx + 1}`);
+      const titleEl = document.getElementById(`bento-title-${idx + 1}`);
+      const descEl = document.getElementById(`bento-desc-${idx + 1}`);
+
+      if (imgEl) imgEl.src = card.img;
+      if (iconEl) iconEl.innerHTML = `<i class="${card.icon}"></i>`;
+      if (titleEl) titleEl.innerText = card.title;
+      if (descEl) descEl.innerText = card.desc;
+    });
+  }
+
+  // 3. Equipment Showcase / Studio Gallery Toggle
+  const eqTag = document.getElementById('equipment-tag');
+  const eqTitle = document.getElementById('equipment-title');
+  const eqSubtitle = document.getElementById('equipment-subtitle');
+  const eqNavLinks = document.querySelectorAll('a[href="#equipment"]');
+  const gallerySection = document.getElementById('gallery');
+  const galleryNavLinks = document.querySelectorAll('a[href="#gallery"]');
+
+  if (theme === 'ladies') {
+    if (eqTag) eqTag.innerText = 'Visual Tour';
+    if (eqTitle) eqTitle.innerText = 'STUDIO GALLERY';
+    if (eqSubtitle) eqSubtitle.innerText = 'Explore our exclusive, state-of-the-art Daya Ladies Studio facility.';
+    eqNavLinks.forEach(link => link.innerText = 'Studio Gallery');
+    if (gallerySection) gallerySection.style.display = 'none';
+    galleryNavLinks.forEach(link => {
+      if (link.parentElement) link.parentElement.style.display = 'none';
+    });
+
+    const eqContainer = document.getElementById('equipment-container');
+    if (eqContainer && data.studioGallery) {
+      const images = data.studioGallery.filter(item => item.type === 'image');
+      const video = data.studioGallery.find(item => item.type === 'video');
+
+      eqContainer.className = 'studio-gallery-wrapper';
+      eqContainer.innerHTML = `
+        <div class="studio-gallery-grid">
+          ${images.map(item => `
+            <div class="equipment-card" data-id="${item.id}">
+              <div class="equipment-img-wrapper" style="height: 300px;">
+                <img src="${item.src}" alt="${item.title}" class="equipment-img" loading="lazy" style="object-fit: cover; width: 100%; height: 100%;">
+              </div>
+              <div class="equipment-content">
+                <h3 class="equipment-title">${item.title}</h3>
+                <p class="equipment-desc">${item.desc}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        ${video ? `
+          <div class="studio-video-container" style="margin-top: 1rem; width: 100%;">
+            <div class="equipment-card studio-video-card" data-id="${video.id}" style="width: 100%;">
+              <div class="equipment-img-wrapper studio-video-wrapper">
+                <video src="${video.src}" controls playsinline preload="metadata" class="equipment-img" style="object-fit: cover; width: 100%; height: 100%;"></video>
+              </div>
+              <div class="equipment-content">
+                <h3 class="equipment-title">${video.title}</h3>
+                <p class="equipment-desc">${video.desc}</p>
+              </div>
+            </div>
+          </div>
+        ` : ''}
+      `;
+    }
+  } else {
+    if (eqTag) eqTag.innerText = 'Elite Machinery';
+    if (eqTitle) eqTitle.innerText = 'PREMIUM EQUIPMENT SHOWCASE';
+    if (eqSubtitle) eqSubtitle.innerText = 'Train on elite-grade machinery maintained to absolute safety and comfort standards.';
+    eqNavLinks.forEach(link => link.innerText = 'Equipment');
+    if (gallerySection) gallerySection.style.display = '';
+    galleryNavLinks.forEach(link => {
+      if (link.parentElement) link.parentElement.style.display = '';
+    });
+
+    const eqContainer = document.getElementById('equipment-container');
+    if (eqContainer) {
+      eqContainer.className = 'equipment-grid';
+      eqContainer.innerHTML = data.equipment.map(eq => `
+        <div class="equipment-card" data-id="${eq.id}">
+          <div class="equipment-img-wrapper">
+            <img src="${eq.img}" alt="${eq.title}" class="equipment-img" loading="lazy">
+          </div>
+          <div class="equipment-content">
+            <h3 class="equipment-title">${eq.title}</h3>
+            <p class="equipment-desc">${eq.desc}</p>
+          </div>
+        </div>
+      `).join('');
+
+      // Re-bind equipment card clicks for Modal Spec triggers
+      eqContainer.querySelectorAll('.equipment-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const eqId = card.getAttribute('data-id');
+          openEquipmentModal(theme, eqId);
+        });
+      });
+    }
   }
 
   // 4. Programs Grid (Filtered)
@@ -711,23 +819,19 @@ function renderThemeContent(theme) {
     }
   }
 
-  // 7. Success Stories (Transformations & Testimonials)
+  // 7. Success Stories (Reviews Marquee)
   const successTag = document.getElementById('success-tag');
   const successTitle = document.getElementById('success-title');
   const successSubtitle = document.getElementById('success-subtitle');
   if (successTag) successTag.innerText = theme === 'mens' ? 'Achievers Profile' : 'Empowered Members';
   if (successTitle) successTitle.innerText = theme === 'mens' ? 'SUCCESS STORIES' : 'MEMBER ACHIEVEMENTS';
   if (successSubtitle) successSubtitle.innerText = theme === 'mens'
-    ? 'Real physical transformations and verified reviews from our Google Maps members.'
-    : 'Real client feedback and transformations from our exclusive Arilova community.';
+    ? 'Verified reviews and feedback from our Google Maps members.'
+    : 'Real client feedback and reviews from our exclusive Arilova community.';
 
   const transformationsContainer = document.getElementById('transformations-container');
   if (transformationsContainer) {
-    transformationsContainer.innerHTML = data.transformations.map(img => `
-      <div class="transform-card">
-        <img src="${img}" alt="Daya Transformation Profile" class="transform-img" loading="lazy">
-      </div>
-    `).join('');
+    transformationsContainer.style.display = 'none';
   }
 
   const testimonialsContainer = document.getElementById('testimonials-container');

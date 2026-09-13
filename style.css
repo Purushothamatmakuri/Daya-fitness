@@ -781,6 +781,50 @@ body.theme-ladies .hero-toggle-indicator {
   transform: scale(1.08);
 }
 
+.equipment-img-wrapper video.equipment-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  border-radius: 0;
+}
+
+.studio-gallery-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.studio-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  width: 100%;
+}
+
+.studio-video-wrapper {
+  height: 520px !important;
+}
+
+@media (max-width: 1024px) {
+  .studio-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .studio-video-wrapper {
+    height: 400px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .studio-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+  .studio-video-wrapper {
+    height: 280px !important;
+  }
+}
+
 .equipment-content {
   padding: 1.5rem;
 }
